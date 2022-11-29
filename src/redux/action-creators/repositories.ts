@@ -3,25 +3,22 @@ import { Dispatch } from "redux";
 import ActionType from "../action-types/repositories";
 import Actions from "../actions/repositories";
 
-const searchRepositories = (term: string) => {
+export const searchRepositories = (term: string) => {
   return async (dispatch: Dispatch<Actions>) => {
     dispatch({
       type: ActionType.SEARCH_REPOSITORIES,
     });
 
     try {
-      const { data } = await axios.get(
-        "https://registry.npmjs.org/-/v1/search",
-        {
-          params: {
-            text: term,
-          },
-        }
-      );
-      const repositories = data.object.map((item: any) => item.package.name);
+      const { data } = await axios.get("https://registry.npmjs.org/-/v1/search", {
+        params: {
+          text: term,
+        },
+      });
+      const repositoryNames = data.objects.map((item: any) => item.package.name);
       dispatch({
         type: ActionType.SEARCH_REPOSITORIES_SUCCESS,
-        payload: repositories,
+        payload: repositoryNames,
       });
     } catch (err: any) {
       dispatch({
@@ -31,5 +28,3 @@ const searchRepositories = (term: string) => {
     }
   };
 };
-
-export default searchRepositories;
