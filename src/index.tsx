@@ -1,7 +1,19 @@
-import ReactDOM from "react-dom";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
 
 const Index = () => {
-  return <div>This is the Redux-TypeScript Example</div>;
+  return (
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  );
 };
 
-ReactDOM.render(<Index />, document.getElementById("root"));
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement
+);
+
+root.render(<Index />);
+
+// ReactDOM.render(<Index />, document.getElementById("root"));
